@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Arduino serial:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Arduino_serial_jar</output-path>
+    <root id="archive" name="Arduino serial.jar">
+      <element id="module-output" name="Arduino serial" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Libs/rxtx-2.2pre2-bins/RXTXcomm.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

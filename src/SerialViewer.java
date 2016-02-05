@@ -1,6 +1,7 @@
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -16,9 +17,14 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.text.DefaultCaret;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Enumeration;
 
 /**
@@ -34,6 +40,9 @@ public class SerialViewer implements ActionListener
     private JTextField textField1;
     private JButton sendByteButton;
     private JSpinner spinner1;
+    private JButton sendFileButton;
+    private JTextField textField2;
+    private JButton button1;
 
     private ButtonGroup baudGroup;
     private ButtonGroup lineEndingGroup;
@@ -149,6 +158,42 @@ public class SerialViewer implements ActionListener
 
         sendButton.addActionListener(a -> onSend());
         sendByteButton.addActionListener(a -> onSendByte());
+        sendFileButton.addActionListener(a -> onSendFile());
+        button1.addActionListener(a -> onSelectFile());
+    }
+
+    private void onSelectFile()
+    {
+        JFileChooser jfc = new JFileChooser(".");
+        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int status = jfc.showDialog(content.getParent(), "Select File");
+
+        if(status == JFileChooser.APPROVE_OPTION)
+        {
+            textField2.setText(jfc.getSelectedFile().getAbsolutePath());
+        }
+    }
+
+    private void onSendFile()
+    {
+        Path filePath = Paths.get(textField2.getText());
+        byte[] fileBytes = new byte[0];
+
+        write("Sending file (" + filePath.getFileName() + ")");
+
+        try
+        {
+            fileBytes = Files.readAllBytes(filePath);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+
+        for(byte b : fileBytes)
+        {
+            COM3.write(b);
+        }
+
+        write("File transfer done");
     }
 
     private void onSendByte()
