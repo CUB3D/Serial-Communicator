@@ -1,20 +1,4 @@
-import javax.swing.AbstractButton;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 import javax.swing.text.DefaultCaret;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -55,6 +39,13 @@ public class SerialViewer implements ActionListener
 
     public SerialViewer()
     {
+        try
+        {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+
         JFrame frame = new JFrame("Serial Viewer");
 
         JMenuBar menuBar = new JMenuBar();
