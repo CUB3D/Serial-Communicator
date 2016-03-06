@@ -1,3 +1,5 @@
+import gnu.io.CommPortIdentifier;
+
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
 import java.awt.Dimension;
@@ -265,7 +267,9 @@ public class SerialViewer implements ActionListener
     {
         instance = new SerialViewer();
 
-        COM3 = new SerialMain("COM3");
+        System.out.println("Connecting to :" + args[0]);
+
+        COM3 = new SerialMain(args[0]);
         COM3.init(9600);
 
         System.out.println("Started");
